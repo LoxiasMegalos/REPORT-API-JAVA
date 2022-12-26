@@ -11,12 +11,12 @@ public interface OrderRepository extends MongoRepository<Order, Long> {
     @Query("{'codigoPedido': ?0}")
     Order findByCodigoPedido(Long codigoPedido);
 
-    @Query(value = "{codigoCliente:'?0'}", fields="{'codigoPedido' : 1}")
-    List<String> findAllOrdersByCustomers(Long codigoCliente);
+    @Query(value = "{codigoCliente:'?0'}")
+    List<Order> findAllByCodigoCliente(Long codigoCliente);
 
-    @Query(value = "{codigoCliente:'?0'}", fields="{'codigoPedido' : 1}", count = true)
-    Long findQuantityOrdersByCustomers(Long codigoCliente);
+    @Query(value = "{'codigoCliente':?0}", count = true)
+    Long countByCodigoCliente(Long codigoCliente);
 
-    @Query(value = "{codigoCliente}", fields="{'codigoCliente' : 1}")
-    List<Long> findAllCustomers();
+    @Query(value = "{codigoCliente}")
+    List<Order> findAllCustomers();
 }

@@ -3,6 +3,7 @@ package com.project.reports.domain.requests.service;
 import com.project.reports.domain.requests.model.Order;
 import com.project.reports.domain.requests.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,9 @@ import java.util.List;
 public class OrderService {
 
     private OrderRepository orderRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Autowired
     public OrderService(OrderRepository orderRepository){
