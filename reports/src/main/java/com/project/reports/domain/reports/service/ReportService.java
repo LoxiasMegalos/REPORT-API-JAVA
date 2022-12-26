@@ -1,13 +1,9 @@
 package com.project.reports.domain.reports.service;
 
-import com.project.reports.domain.reports.model.DadosListaDePedidosPorCliente;
-import com.project.reports.domain.reports.model.DadosPedidos;
-import com.project.reports.domain.reports.model.DadosQuantidadePedidosPorCliente;
-import com.project.reports.domain.reports.model.DadosValorTotalDoPedido;
+import com.project.reports.domain.reports.model.*;
 import com.project.reports.domain.reports.repository.ReportRepository;
-import com.project.reports.domain.requests.model.Item;
-import com.project.reports.domain.requests.model.Order;
-import com.project.reports.domain.requests.repository.OrderRepository;
+import com.project.reports.domain.requests.entity.Item;
+import com.project.reports.domain.requests.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -27,19 +23,6 @@ public class ReportService {
         this.reportRepository = reportRepository;
         this.mongoTemplate = mongoTemplate;
     }
-
-    /*
-            Query query = new Query();
-        query.addCriteria(Criteria.where("codigoCliente").is(order.getCodigoCliente()));
-        var query1 = mongoTemplate.find(query, Order.class);
-
-        //var query2 = orderRepository.findQuantityOrdersByCustomers(order.getCodigoCliente());
-        //var query3 = orderRepository.findAllCustomers();
-
-        System.out.println("Encontrando todos os pedidos de 1 cliente " + query1);
-        //System.out.println("Encontrando a quantidade de pedidos de 1 cliente" + query2);
-        //System.out.println("Encontrando todos os clientes" + query3);
-     */
 
     public DadosValorTotalDoPedido getValorTotalDoPedido(Long codigoPedido){
         var orderBuscada = reportRepository.findByCodigoPedido(codigoPedido);
@@ -63,20 +46,16 @@ public class ReportService {
 
         Query query = new Query();
         query.addCriteria(Criteria.where("codigoCliente").exists(true));
-        var listaCodigoCliente = mongoTemplate.find(query, Order.class);
+        var listaCodigoCliente = mongoTemplate.find(query, Order.class).stream().map(CodigosClientes::new).toList();
 
-        Set<Long> codigoClientes = new HashSet<Long>();
+        Set<CodigosClientes> codigosClientes = new HashSet<CodigosClientes>(listaCodigoCliente);
 
-        for(Order order : listaCodigoCliente){
-            codigoClientes.add(order.getCodigoCliente());
-        }
-
-        for(Long codigo : codigoClientes){
+        for(CodigosClientes codigo : codigosClientes){
             Query queryQuantidadePedidos = new Query();
-            queryQuantidadePedidos.addCriteria(Criteria.where("codigoCliente").is(codigo));
+            queryQuantidadePedidos.addCriteria(Criteria.where("codigoCliente").is(codigo.codigoCliente()));
             var quantidadeDePedidos = mongoTemplate.count(queryQuantidadePedidos, Order.class);
 
-            DadosQuantidadePedidosPorCliente resultado = new DadosQuantidadePedidosPorCliente(codigo, quantidadeDePedidos);
+            DadosQuantidadePedidosPorCliente resultado = new DadosQuantidadePedidosPorCliente(codigo.codigoCliente(), quantidadeDePedidos);
             listagem.add(resultado);
         }
 
@@ -89,21 +68,16 @@ public class ReportService {
 
         Query query = new Query();
         query.addCriteria(Criteria.where("codigoCliente").exists(true));
-        var listaCodigoCliente = mongoTemplate.find(query, Order.class);
+        var listaCodigoCliente = mongoTemplate.find(query, Order.class).stream().map(CodigosClientes::new).toList();
 
-        Set<Long> codigoClientes = new HashSet<Long>();
+        Set<CodigosClientes> codigoClientes = new HashSet<CodigosClientes>(listaCodigoCliente);
 
-        for(Order order : listaCodigoCliente){
-            codigoClientes.add(order.getCodigoCliente());
-        }
-
-        for(Long codigo : codigoClientes){
+        for(CodigosClientes codigo : codigoClientes){
             Query queryListagemPedidos = new Query();
-            queryListagemPedidos.addCriteria(Criteria.where("codigoCliente").is(codigo));
+            queryListagemPedidos.addCriteria(Criteria.where("codigoCliente").is(codigo.codigoCliente()));
             var listagemPedidos = mongoTemplate.find(queryListagemPedidos, Order.class).stream().map(DadosPedidos::new).toList();
 
-
-            DadosListaDePedidosPorCliente resultado = new DadosListaDePedidosPorCliente(codigo, listagemPedidos);
+            DadosListaDePedidosPorCliente resultado = new DadosListaDePedidosPorCliente(codigo.codigoCliente(), listagemPedidos);
             listagem.add(resultado);
         }
 

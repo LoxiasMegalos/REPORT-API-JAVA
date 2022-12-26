@@ -1,7 +1,7 @@
 package com.project.reports.domain.reports.model;
 
-import com.project.reports.domain.requests.model.Item;
-import com.project.reports.domain.requests.model.Order;
+import com.project.reports.domain.requests.entity.Item;
+import com.project.reports.domain.requests.entity.Order;
 
 import java.util.List;
 

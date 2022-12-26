@@ -1,11 +1,14 @@
 package com.project.reports.domain.requests.service;
 
-import com.project.reports.domain.requests.model.Order;
+import com.project.reports.domain.requests.entity.Item;
+import com.project.reports.domain.requests.entity.Order;
+import com.project.reports.domain.requests.model.OrderData;
 import com.project.reports.domain.requests.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,7 +24,10 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public Order saverOrder(Order order){
+    public Order saverOrder(OrderData newOrder){
+
+
+        Order order = new Order(newOrder);
         var orderBuscada = orderRepository.findByCodigoPedido(order.getCodigoPedido());
 
         if(orderBuscada == null){
@@ -39,4 +45,7 @@ public class OrderService {
         orderRepository.deleteAll();
     }
 
+    public Order getOrderById(Long codigoPedido) {
+        return orderRepository.findByCodigoPedido(codigoPedido);
+    }
 }

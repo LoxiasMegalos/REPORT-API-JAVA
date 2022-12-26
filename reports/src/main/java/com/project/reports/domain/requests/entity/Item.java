@@ -1,10 +1,12 @@
-package com.project.reports.domain.requests.model;
+package com.project.reports.domain.requests.entity;
 
+import com.project.reports.domain.requests.model.ItemData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 
 @Document("itens")
 @Data
@@ -19,4 +21,9 @@ public class Item {
 
     private Double preco;
 
+    public Item(ItemData itemData) {
+        this.preco = itemData.preco();
+        this.produto = itemData.produto();
+        this.quantidade = itemData.quantidade();
+    }
 }
