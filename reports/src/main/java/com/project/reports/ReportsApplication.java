@@ -10,9 +10,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories
 public class ReportsApplication {
 
-	@Autowired
-	OrderRepository orderRepository;
-
 	public static void main(String[] args) {
 		SpringApplication.run(ReportsApplication.class, args);
 	}
