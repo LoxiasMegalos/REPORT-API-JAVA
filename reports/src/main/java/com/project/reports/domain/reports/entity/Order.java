@@ -1,6 +1,6 @@
-package com.project.reports.domain.requests.entity;
+package com.project.reports.domain.reports.entity;
 
-import com.project.reports.domain.requests.model.OrderData;
+import com.project.reports.domain.reports.model.OrderData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

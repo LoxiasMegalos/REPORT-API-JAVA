@@ -1,6 +1,6 @@
 package com.project.reports.domain.reports.model;
 
-import com.project.reports.domain.requests.entity.Order;
+import com.project.reports.domain.reports.entity.Order;
 
 public record DadosValorTotalDoPedido(
 

@@ -1,8 +1,7 @@
-package com.project.reports.domain.requests.model;
+package com.project.reports.domain.reports.model;
 
-import com.project.reports.domain.requests.entity.Item;
+import com.project.reports.domain.reports.entity.Item;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,6 +17,6 @@ public record OrderData(
 
         @NotEmpty(message = "O pedido deve conter no mínimo um item")
         @Valid
-        List<ItemData> itens
+        List<Item> itens
 ) {
 }

@@ -1,9 +1,9 @@
 package com.project.reports.domain.reports.service;
 
+import com.project.reports.domain.reports.entity.Item;
+import com.project.reports.domain.reports.entity.Order;
 import com.project.reports.domain.reports.model.*;
 import com.project.reports.domain.reports.repository.ReportRepository;
-import com.project.reports.domain.requests.entity.Item;
-import com.project.reports.domain.requests.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -36,7 +36,7 @@ public class ReportService {
         for(Item item: orderBuscada.getItens()){
             total += item.getPreco()*item.getQuantidade();
         }
-        System.out.println(orderBuscada);
+
         return new DadosValorTotalDoPedido(orderBuscada, total);
     }
 

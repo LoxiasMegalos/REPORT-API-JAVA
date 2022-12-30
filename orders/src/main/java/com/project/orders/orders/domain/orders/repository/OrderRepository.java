@@ -1,6 +1,6 @@
-package com.project.reports.domain.requests.repository;
+package com.project.orders.orders.domain.orders.repository;
 
-import com.project.reports.domain.requests.entity.Order;
+import com.project.orders.orders.domain.orders.entity.Order;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

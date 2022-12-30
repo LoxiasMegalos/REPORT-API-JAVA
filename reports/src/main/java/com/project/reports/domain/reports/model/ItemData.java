@@ -1,4 +1,4 @@
-package com.project.reports.domain.requests.model;
+package com.project.reports.domain.reports.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

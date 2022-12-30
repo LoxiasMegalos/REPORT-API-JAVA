@@ -1,12 +1,11 @@
-package com.project.reports.domain.requests.entity;
+package com.project.orders.orders.domain.orders.entity;
 
-import com.project.reports.domain.requests.model.ItemData;
+import com.project.orders.orders.domain.orders.model.ItemData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 
 @Document("itens")
 @Data

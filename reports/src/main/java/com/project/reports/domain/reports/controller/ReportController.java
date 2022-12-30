@@ -4,7 +4,6 @@ import com.project.reports.domain.reports.model.DadosListaDePedidosPorCliente;
 import com.project.reports.domain.reports.model.DadosQuantidadePedidosPorCliente;
 import com.project.reports.domain.reports.model.DadosValorTotalDoPedido;
 import com.project.reports.domain.reports.service.ReportService;
-import com.project.reports.domain.requests.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
