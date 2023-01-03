@@ -25,6 +25,6 @@ public class Order {
     public Order(OrderData newOrder) {
         this.codigoPedido = newOrder.codigoPedido();
         this.codigoCliente = newOrder.codigoCliente();
-        this.itens = newOrder.itens().stream().map(Item::new).toList();
+        this.itens = newOrder.itens();
     }
 }

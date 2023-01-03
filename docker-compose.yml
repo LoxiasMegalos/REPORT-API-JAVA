@@ -1,0 +1,66 @@
+version: '3.8'
+
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  
+  eureka-server:
+    image: eureka-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+
+  gateway:
+    image: gateway
+    container_name: gateway
+    ports:
+      - "8081:8081"
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+    links:
+      - "eureka-server"
+    depends_on:
+      - "eureka-server"
+
+ 
+  orders:
+    build: ./orders
+    container_name: order
+    volumes:
+      - ./orders:/orders
+    depends_on:
+      - rabbitmq
+      - eureka-server
+    links:
+      - "eureka-server"
+    restart: on-failure
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+
+  reports:
+    build: ./reports
+    container_name: report
+    volumes:
+      - ./reports:/reports
+    depends_on:
+      - rabbitmq
+      - eureka-server
+      - orders
+    links:
+      - "eureka-server"
+    restart: on-failure
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/

@@ -1,15 +1,10 @@
 version: "3.6"
 
 services:
-    rabbitmq:
-        image: rabbitmq:3.11-management
-        container_name: rabbitmq
-        restart: always
-        ports:
-            - 5672:5672
-            - 15672:15672
-        volumes:
-            - ./dados:/var/lib/rabbitmq/
-        environment:
-            - RABBITMQ_DEFAULT_USER=murillo
-            - RABBITMQ_DEFAULT_PASS=m123
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672

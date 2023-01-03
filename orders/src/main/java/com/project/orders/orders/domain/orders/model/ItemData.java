@@ -1,7 +1,5 @@
 package com.project.orders.orders.domain.orders.model;
 
-import com.project.orders.orders.domain.orders.entity.Item;
-import com.project.orders.orders.domain.orders.entity.Order;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
