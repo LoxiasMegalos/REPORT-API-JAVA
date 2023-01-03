@@ -1,0 +1,66 @@
+version: '3.8'
+
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  mongo:
+    image: 'mongo'
+    ports:
+      - 27017:27017
+    container_name: mongo
+    volumes:
+      - /home/sinoed/data/db:/data/db
+  
+  eureka-server:
+    image: murilloalcantara/server
+    ports:
+      - "8761:8761"
+
+  gateway:
+    image:  murilloalcantara/gateway
+    container_name: gateway
+    ports:
+      - "8081:8081"
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+    links:
+      - "eureka-server"
+    depends_on:
+      - "eureka-server"
+
+ 
+  orders:
+    image:  murilloalcantara/orders
+    container_name: order
+    depends_on:
+      - rabbitmq
+      - eureka-server
+      - mongo
+    links:
+      - "eureka-server"
+    restart: on-failure
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+
+  reports:
+    image: murilloalcantara/reports
+    container_name: report
+    depends_on:
+      - rabbitmq
+      - eureka-server
+      - orders
+      - mongo
+    links:
+      - "eureka-server"
+    restart: on-failure
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
