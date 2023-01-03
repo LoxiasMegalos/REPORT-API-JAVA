@@ -9,6 +9,14 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+
+  mongo:
+    image: 'mongo'
+    ports:
+      - 27017:27017
+    container_name: mongo
+    volumes:
+      - /home/sinoed/data/db:/data/db
   
   eureka-server:
     image: eureka-server
@@ -42,6 +50,7 @@ services:
     depends_on:
       - rabbitmq
       - eureka-server
+      - mongo
     links:
       - "eureka-server"
     restart: on-failure
@@ -58,6 +67,7 @@ services:
       - rabbitmq
       - eureka-server
       - orders
+      - mongo
     links:
       - "eureka-server"
     restart: on-failure
