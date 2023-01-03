@@ -19,14 +19,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Item {
 
     @NotBlank
-    @NotNull
     @Size(min = 1)
     private String produto;
-    @NotBlank
+
     @NotNull
     @Positive
     private Long quantidade;
-    @NotBlank
+
     @NotNull
     @Positive
     private Double preco;
