@@ -1,6 +1,7 @@
 package com.project.orders.orders.domain.orders.entity;
 
 import com.project.orders.orders.domain.orders.model.OrderData;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class Order {
 
     private Long codigoCliente;
 
+    @NotEmpty
     private List<Item> itens;
 
     public Order(OrderData newOrder) {

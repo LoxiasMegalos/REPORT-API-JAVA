@@ -29,9 +29,10 @@ public class OrderService {
         Order order = new Order(newOrder);
         var orderBuscada = orderRepository.findByCodigoPedido(order.getCodigoPedido());
 
-        if(orderBuscada == null){
+        if(orderBuscada == null && order.getItens().get(0).getProduto() != null){
             var createdOrder = orderRepository.save(order);
-            rabbitTemplate.convertAndSend("orders.ex","",new OrderData(createdOrder));
+            var createdOrderToExchange = new OrderData(createdOrder);
+            rabbitTemplate.convertAndSend("orders.ex","",createdOrderToExchange);
             return new CreatedOrderDetails(createdOrder);
         }
 

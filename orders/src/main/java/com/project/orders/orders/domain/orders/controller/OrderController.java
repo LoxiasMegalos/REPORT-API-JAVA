@@ -27,7 +27,7 @@ public class OrderController extends ErrorHandler {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<CreatedOrderDetails> saveOrder(@RequestBody @Valid OrderData newOrder, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<CreatedOrderDetails> saveOrder(@RequestBody @Valid OrderData newOrder){
         return ResponseEntity.ok(orderService.saverOrder(newOrder));
     }
 
